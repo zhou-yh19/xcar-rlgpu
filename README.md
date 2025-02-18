@@ -1,5 +1,7 @@
 # XCAR RL Drift Control 🏎️
 
+<img width="962" alt="Image" src="https://github.com/user-attachments/assets/55ce48ad-ee49-40f6-8071-91fe5aa969e7" />
+
 A PyTorch-based framework for training autonomous drifting policies for vehicles using reinforcement learning. This framework provides high-performance vectorized environments for drift control tasks and several baseline implementations.
 
 [**Installation**](#installation-) | [**Quick Start**](#quick-start-) | [**Environments**](#environments-) | [**Training**](#training-) | [**Technical Details**](#technical-details-) | [**Code Structure**](#code-structure-)
