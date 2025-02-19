@@ -49,7 +49,7 @@ cd experiments/continuous_drift_iwd
 ./run.sh
 ```
 
-This will train a policy for the fixed circle drifting task. Results will be saved in the `data` directory.
+This will train a policy for the consecutive drifting task. Results will be saved in the `data` directory.
 
 ## Environments 🌍
 
