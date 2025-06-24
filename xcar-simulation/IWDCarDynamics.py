@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 
 class IWDCarDynamics(nn.Module):
-    def __init__(self, u, p_body, p_tyre, differentiable=False, disturbance=None):
+    def __init__(self, u, p_body, p_tyre, differentiable=False, disturbance=None, drivetrain="iwd"):
         """
         u: [batch_size, 5] - (delta, omega_fr, omega_fl, omega_rr, omega_rl)
         p_body: [batch_size, 8] - (lf, lr, m, h, g, Iz, T, wheel_radius)
@@ -14,6 +14,7 @@ class IWDCarDynamics(nn.Module):
         self.p_body = to_param(p_body)
         self.p_tyre = to_param(p_tyre)
         self.disturbance = disturbance
+        self.drivetrain = drivetrain
 
     def compute_extended_state(self, s):
         """
@@ -80,6 +81,11 @@ class IWDCarDynamics(nn.Module):
         # Transform front wheel velocities [batch_size, 2, 4]
         v_wheel_local = v_wheel.clone()
         v_wheel_local[:, :, :2] = torch.bmm(R_steer, v_wheel[:, :, :2])
+
+        # Reset front wheel velocities when drivetrain is "rwd"
+        if self.drivetrain == "rwd":
+            omega_fr = v_wheel_local[:, 0, 0]
+            omega_fl = v_wheel_local[:, 0, 1]
         
         # Wheel angular velocities [batch_size, 4]
         omega = torch.stack([omega_fr, omega_fl, omega_rr, omega_rl], dim=1)
